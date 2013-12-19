@@ -1,0 +1,12 @@
+{
+  "name": "audiofun",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "platform": "Polymer/platform#master",
+    "polymer": "Polymer/polymer#master",
+    "webaudio-knob": "sjmiles/webaudio-knob#master",
+    "webaudio-controls": "sjmiles/webaudio-controls#master",
+    "audio-tags": "sjmiles/audio-tags#master"
+  }
+}

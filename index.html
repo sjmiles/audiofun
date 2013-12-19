@@ -1,0 +1,60 @@
+﻿<!doctype html>
+<html>
+<head>
+  <title>Audio Fun</title>
+  <script src="components/platform/platform.js"></script>
+  <link rel="import" href="components/webaudio-controls/webaudio-knob.html">
+  <link rel="import" href="components/webaudio-controls/webaudio-switch.html">
+  <link rel="import" href="components/audio-tags/audio-tags.html">
+  <style>
+    audio-fun {
+      display: inline-block;
+      padding: 8px 14px;
+      background: #eee;
+      border: 1px solid #ddd;
+      margin: 2px;
+    }
+  </style>
+</head>
+<body unresolved>
+
+  <audio-fun></audio-fun>
+  <br>
+  <audio-fun></audio-fun>
+  <br>
+  <audio-fun></audio-fun>
+
+  <polymer-element name="audio-fun">
+    <template>
+      Playing: <webaudio-switch value="{{playing}}" tooltip="Oscillator On/Off"></webaudio-switch>
+      Type: <webaudio-knob value="{{type}}" min="0" max="39" step="1" scalar="0.1" valuetip="false" tooltip="{{$.osc.type}}"></webaudio-knob>
+      Freq: <webaudio-knob value="{{frequency}}" min="0" max="10000" step="20"></webaudio-knob>
+      Gain: <webaudio-knob value="{{gain}}" min="0" max="100" step="1"></webaudio-knob>
+      &nbsp;
+      <audio-context>
+        <audio-chain>
+          <audio-oscillator id="osc" frequency="{{frequency}}" playing="{{playing}}"></audio-oscillator>
+          <audio-oscilloscope animating="{{playing}}"></audio-oscilloscope>
+          <audio-vumeter animating="{{playing}}"></audio-vumeteranimate="{{playing}}">
+        </audio-chain>
+      </audio-context>
+    </template>
+    <script>
+      Polymer('audio-fun', {
+        gain: 5,
+        playing: false,
+        frequency: 440,
+        ready: function() {
+          this.gainChanged();
+        },
+        gainChanged: function() {
+          this.$.osc.gain = this.gain / 500;
+        },
+        typeChanged: function() {
+          this.$.osc.type = ['sine', 'square', 'sawtooth', 'triangle'][Math.floor(this.type/10.0)] || 'sine';
+        }
+      })
+    </script>
+  </polymer-element>
+</body>
+</html>
